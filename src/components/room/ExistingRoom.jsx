@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Col, Row } from "react-bootstrap";
-import { getAllRooms } from "../utils/ApiFunctions";
+import { Link } from "react-router-dom";
+import { FaEdit, FaEye, FaPlus, FaTrashAlt } from "react-icons/fa";
+import { getAllRooms, deleteRoom } from "../utils/ApiFunctions";
 import RoomFilter from "../common/RoomFilter";
 import RoomPaginator from "../common/RoomPaginator";
 
@@ -24,7 +26,6 @@ const ExistingRoom = () => {
     setIsLoading(true);
     try {
       const results = await getAllRooms();
-      console.log("FETCH ROOMS: ", results);
       setRooms(results);
       setIsLoading(false);
     } catch (err) {
@@ -59,6 +60,24 @@ const ExistingRoom = () => {
     setCurrentPage(pageNumber);
   };
 
+  const handleDelete = async (roomId) => {
+    try {
+      const result = await deleteRoom(roomId);
+      if (result === "") {
+        setSuccessMsg(`Room number ${roomId} was deleted succesfully.`);
+        fetchRooms();
+      } else {
+        console.error(`Error deleting room : ${result.message}`);
+      }
+    } catch (error) {
+      setErrorMsg(error.message);
+    }
+    setTimeout(() => {
+      setSuccessMsg("");
+      setErrorMsg("");
+    }, 3000);
+  };
+
   return (
     <>
       <div className="container col-md-8 col-lg-6">
@@ -75,8 +94,14 @@ const ExistingRoom = () => {
               <h2>Existing Rooms</h2>
             </div>
             <Row>
-              <Col md={6} className="mb-3 mb-md-0">
+              <Col md={6} className="mb-2 md-mb-0">
                 <RoomFilter data={rooms} setFilteredData={setFilteredRooms} />
+              </Col>
+
+              <Col md={6} className="d-flex justify-content-end">
+                <Link to={"/add-room"}>
+                  <FaPlus /> Add Room
+                </Link>
               </Col>
             </Row>
 
@@ -95,10 +120,21 @@ const ExistingRoom = () => {
                     <td>{room.id}</td>
                     <td>{room.roomType}</td>
                     <td>{room.roomPrice}</td>
-                    <td>
-                      <button className="">View / Edit</button>
-
-                      <button>Delete</button>
+                    <td className="gap-2">
+                      <Link to={`/edit-room/${room.id}`} className="gap-2">
+                        <span className="btn btn-info btn-sm">
+                          <FaEye />
+                        </span>
+                        <span className="btn btn-warning btn-sm ml-5">
+                          <FaEdit />
+                        </span>
+                      </Link>
+                      <button
+                        className="btn btn-danger btn-sm ml-5"
+                        onClick={() => handleDelete(room.id)}
+                      >
+                        <FaTrashAlt />
+                      </button>
                     </td>
                   </tr>
                 ))}

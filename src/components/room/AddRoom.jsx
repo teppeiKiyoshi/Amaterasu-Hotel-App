@@ -41,18 +41,13 @@ const AddRoom = () => {
         newRoom.roomType,
         newRoom.roomPrice
       );
-      console.log("laman ni success : " ,newRoom.photo,
-      newRoom.roomType,
-      newRoom.roomPrice);
       if (success != undefined) {
-        console.log("success on adding");
         setSuccessMsg("A new room was succesfully added to the database.");
         setNewRoom({ photo: null, roomType: "", roomPrice: "" });
         setImagePreview("");
         setErrorMsg("");
       } else {
         setErrorMsg("There was an error adding room to the database.");
-        console.log(errorMsg);
       }
     } catch (error) {
       setErrorMsg(error.message);
