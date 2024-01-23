@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getRoomTypes } from "../utils/ApiFunctions";
+import PropTypes from 'prop-types';
 
 const RoomTypeSelector = ({ handleRoomInputChange, newRoom }) => {
     const [roomTypes, setRoomTypes] = useState([""])
@@ -69,5 +70,10 @@ const RoomTypeSelector = ({ handleRoomInputChange, newRoom }) => {
     </>
   );
 };
+
+RoomTypeSelector.propTypes ={
+    handleRoomInputChange : PropTypes.func,
+    newRoom: PropTypes.object
+}
 
 export default RoomTypeSelector;

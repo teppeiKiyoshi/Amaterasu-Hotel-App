@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 import { addRoom } from "../utils/ApiFunctions";
 import RoomTypeSelector from "../common/RoomTypeSelector";
 
@@ -134,5 +134,6 @@ const AddRoom = () => {
 		</>
   );
 };
+
 
 export default AddRoom;

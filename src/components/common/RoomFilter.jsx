@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PropTypes from 'prop-types';
 
 const RoomFilter = ({data, setFilteredData}) => {
 
@@ -39,6 +40,11 @@ const RoomFilter = ({data, setFilteredData}) => {
         <button className='btn btn-hotel' type='button' onClick={clearFilter}>Clear filter</button>
     </div>
   )
+}
+
+RoomFilter.propTypes ={
+    data : PropTypes.array,
+    setFilteredData: PropTypes.func
 }
 
 export default RoomFilter
