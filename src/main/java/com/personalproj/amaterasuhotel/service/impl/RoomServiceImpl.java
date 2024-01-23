@@ -1,5 +1,6 @@
 package com.personalproj.amaterasuhotel.service.impl;
 
+import com.personalproj.amaterasuhotel.exception.InternalServerException;
 import com.personalproj.amaterasuhotel.exception.ResourceNotFoundException;
 import com.personalproj.amaterasuhotel.model.RoomModel;
 import com.personalproj.amaterasuhotel.repository.RoomRepository;
@@ -62,5 +63,41 @@ public class RoomServiceImpl implements RoomService {
         }
 
         return null;
+    }
+
+    @Override
+    public void deleteRoomByID(Long roomId) {
+        Optional<RoomModel> room = roomRepository.findById(roomId);
+        if(room.isPresent()){
+            roomRepository.deleteById(roomId);
+        }
+    }
+
+    @Override
+    public RoomModel updateRoom(Long roomId, String roomType, BigDecimal roomPrice, byte[] photoBytes) throws ResourceNotFoundException {
+        RoomModel room = roomRepository.findById(roomId).orElseThrow(()-> new ResourceNotFoundException("Room not found."));
+
+        if(roomType != null){
+            room.setRoomType(roomType);
+        }
+
+        if(roomPrice != null) {
+            room.setRoomPrice(roomPrice);
+        }
+
+        if(photoBytes != null && photoBytes.length > 0) {
+            try {
+                room.setPhoto(new SerialBlob(photoBytes));
+            }catch (SQLException exception){
+                throw new InternalServerException("Error updating room.");
+            }
+        }
+
+        return roomRepository.save(room);
+    }
+
+    @Override
+    public Optional<RoomModel> getRoomById(Long roomId) {
+        return Optional.of(roomRepository.findById(roomId).get());
     }
 }
