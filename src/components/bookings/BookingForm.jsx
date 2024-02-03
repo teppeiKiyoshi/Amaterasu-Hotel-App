@@ -117,7 +117,7 @@ const BookingForm = () => {
                     type="text"
                     id="guestFullName"
                     name="guestFullName"
-                    value={booking.guestFullName}
+                    value={booking.guestFullName ? booking.guestFullName : ""}
                     placeholder="Enter your fullname"
                     onChange={handleInputChange}
                   />
@@ -135,7 +135,7 @@ const BookingForm = () => {
                     type="email"
                     id="guestEmail"
                     name="guestEmail"
-                    value={booking.guestEmail}
+                    value={booking.guestEmail ? booking.guestEmail : ""}
                     placeholder="Enter your email"
                     onChange={handleInputChange}
                     disabled
@@ -157,7 +157,7 @@ const BookingForm = () => {
                         type="date"
                         id="checkInDate"
                         name="checkInDate"
-                        value={booking.checkInDate}
+                        value={booking.checkInDate ? booking.checkInDate : ""}
                         placeholder="check-in-date"
                         min={moment().format("MMM Do, YYYY")}
                         onChange={handleInputChange}
@@ -179,7 +179,7 @@ const BookingForm = () => {
                         type="date"
                         id="checkOutDate"
                         name="checkOutDate"
-                        value={booking.checkOutDate}
+                        value={booking.checkOutDate ? booking.checkOutDate : ""}
                         placeholder="check-out-date"
                         min={moment().format("MMM Do, YYYY")}
                         onChange={handleInputChange}
@@ -208,7 +208,7 @@ const BookingForm = () => {
                         type="number"
                         id="numOfAdults"
                         name="numOfAdults"
-                        value={booking.numOfAdults}
+                        value={booking.numOfAdults ? booking.numOfAdults : ""}
                         min={1}
                         placeholder="0"
                         onChange={handleInputChange}
@@ -229,7 +229,9 @@ const BookingForm = () => {
                         type="number"
                         id="numOfChildren"
                         name="numOfChildren"
-                        value={booking.numOfChildren}
+                        value={
+                          booking.numOfChildren ? booking.numOfChildren : ""
+                        }
                         placeholder="0"
                         min={0}
                         onChange={handleInputChange}
