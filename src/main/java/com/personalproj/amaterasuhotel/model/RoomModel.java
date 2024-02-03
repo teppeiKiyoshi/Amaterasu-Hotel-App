@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
+import java.security.SecureRandom;
 import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,10 +46,19 @@ public class RoomModel {
         bookings.add(booking);
         booking.setRoom(this);
         isBooked = true;
-        // generate random string for code
-        byte[] array = new byte[10]; // length is bounded by 10
-        new Random().nextBytes(array);
-        String bookingCode = new String(array, StandardCharsets.UTF_8);
-        booking.setBookingConfirmationCode(bookingCode);
+
+        // generate a random alphanumeric booking confirmation code
+        int leftLimit = 48; // numeral '0'
+        int rightLimit = 122; // letter 'z'
+        int targetStringLength = 10;
+        Random random = new Random();
+
+        String generatedString = random.ints(leftLimit, rightLimit + 1)
+                .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+                .limit(targetStringLength)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
+
+        booking.setBookingConfirmationCode(generatedString);
     }
 }

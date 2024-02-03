@@ -6,10 +6,11 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @EnableJpaRepositories
 public interface BookingRepository extends JpaRepository<BookedRoomModel, Long> {
-    BookedRoomModel findByBookingConfirmationCode(String confirmationCode);
+    Optional <BookedRoomModel> findByBookingConfirmationCode(String confirmationCode);
     List<BookedRoomModel> findByRoomId(Long roomId);
 }

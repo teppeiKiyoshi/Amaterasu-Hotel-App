@@ -1,5 +1,6 @@
 package com.personalproj.amaterasuhotel.service;
 
+import com.personalproj.amaterasuhotel.exception.ResourceNotFoundException;
 import com.personalproj.amaterasuhotel.model.BookedRoomModel;
 
 import java.util.List;
@@ -11,7 +12,7 @@ public interface BookingService  {
 
     String saveBooking(Long roomId, BookedRoomModel bookingRequest);
 
-    BookedRoomModel findByBookingConfirmationCode(String confirmationCode);
+    BookedRoomModel findByBookingConfirmationCode(String confirmationCode) throws ResourceNotFoundException;
 
     List<BookedRoomModel> getAllBookings();
 }

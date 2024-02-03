@@ -1,6 +1,7 @@
 package com.personalproj.amaterasuhotel.service.impl;
 
 import com.personalproj.amaterasuhotel.exception.InvalidBookingRequestException;
+import com.personalproj.amaterasuhotel.exception.ResourceNotFoundException;
 import com.personalproj.amaterasuhotel.model.BookedRoomModel;
 import com.personalproj.amaterasuhotel.model.RoomModel;
 import com.personalproj.amaterasuhotel.repository.BookingRepository;
@@ -75,7 +76,8 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public BookedRoomModel findByBookingConfirmationCode(String confirmationCode) {
-        return bookingRepository.findByBookingConfirmationCode(confirmationCode);
+    public BookedRoomModel findByBookingConfirmationCode(String confirmationCode) throws ResourceNotFoundException {
+        return bookingRepository.findByBookingConfirmationCode(confirmationCode)
+                .orElseThrow(()-> new ResourceNotFoundException("No booking found with booking confirmation code: " + confirmationCode));
     }
 }
