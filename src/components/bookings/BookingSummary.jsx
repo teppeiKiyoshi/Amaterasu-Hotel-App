@@ -102,7 +102,7 @@ const BookingSummary = ({ booking, payment, isFormValid, onConfirm }) => {
 BookingSummary.propTypes = {
   booking: PropTypes.object,
   payment: PropTypes.number,
-  isFormValid: PropTypes.boolean,
+  isFormValid: PropTypes.bool,
   onConfirm: PropTypes.func,
 };
 

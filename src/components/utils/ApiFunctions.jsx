@@ -123,3 +123,18 @@ export async function cancelBooking(bookingId) {
     );
   }
 }
+
+// GET AVAILABLE ROOMS
+export async function getAvailableRooms(checkInDate, checkOutDate, roomType) {
+  try {
+    const response = await api.get(
+      `rooms/available-rooms?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}&roomType=${roomType}`
+    );
+    return response;
+  } catch (error) {
+    throw new Error(
+      "There was an error retrieving available rooms ",
+      error.message
+    );
+  }
+}

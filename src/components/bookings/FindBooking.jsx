@@ -11,7 +11,7 @@ const FindBooking = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [bookingInfo, setBookingInfo] = useState({
-    id: "",
+    bookingId: "",
     bookingConfirmationCode: "",
     room: { id: "", roomType: "" },
     roomNumber: "",
@@ -25,7 +25,7 @@ const FindBooking = () => {
   });
 
   const emptyBookingInfo = {
-    id: "",
+    bookingId: "",
     bookingConfirmationCode: "",
     room: { id: "", roomType: "" },
     roomNumber: "",
@@ -65,7 +65,7 @@ const FindBooking = () => {
 
   const handleBookingCancellation = async () => {
     try {
-      await cancelBooking(bookingInfo.id);
+      await cancelBooking(bookingInfo.bookingId);
       setIsDeleted(true);
       setSuccessMessage("Booking has been cancelled successfully!");
       setBookingInfo(emptyBookingInfo);
@@ -134,7 +134,7 @@ const FindBooking = () => {
 
             {!isDeleted && (
               <button
-                onClick={() => handleBookingCancellation(bookingInfo.id)}
+                onClick={() => handleBookingCancellation(bookingInfo.bookingId)}
                 className="btn btn-danger"
               >
                 Cancel Booking
