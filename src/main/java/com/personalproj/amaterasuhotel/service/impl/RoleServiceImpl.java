@@ -32,7 +32,7 @@ public class RoleServiceImpl implements RoleService {
     public RoleModel createRole(RoleModel role) {
         String roleName = "ROLE_" + role.getRoleName().toUpperCase();
         RoleModel newRole = new RoleModel(roleName);
-        if(roleRepository.existsByName(roleName)){
+        if(roleRepository.existsByRoleName(roleName)){
             throw new RoleAlreadyExistsException(newRole.getRoleName() + " already exists.");
         }
         return roleRepository.save(newRole);
@@ -46,7 +46,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public RoleModel findByRoleName(String roleName) {
-        return roleRepository.findByName(roleName).get();
+        return roleRepository.findByRoleName(roleName).get();
     }
 
     @Override

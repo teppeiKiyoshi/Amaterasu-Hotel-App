@@ -12,6 +12,7 @@ import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,7 +27,6 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin
 @RequiredArgsConstructor
 @RequestMapping("/amaterasu/v1/api/rooms")
 public class RoomController {
@@ -35,6 +35,7 @@ public class RoomController {
     private final BookingService bookingService;
 
     @PostMapping("/add")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<RoomResponse> addNewRoom(@RequestParam("roomType") String roomType, @RequestParam("roomPrice") BigDecimal roomPrice, @RequestParam("photo") MultipartFile photo) throws SQLException, IOException {
         RoomModel savedRoom = roomService.addNewRoom(roomType, roomPrice, photo);
         RoomResponse response = new RoomResponse(savedRoom.getId(), savedRoom.getRoomType(), savedRoom.getRoomPrice());
@@ -72,6 +73,7 @@ public class RoomController {
     }
 
     @PutMapping("/update/{roomId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<RoomResponse> updateRoom(@PathVariable Long roomId, @RequestParam(required = false) String roomType,
                                                    @RequestParam(required = false) BigDecimal roomPrice, @RequestParam(required = false) MultipartFile photo)
             throws IOException, SQLException, ResourceNotFoundException {
@@ -87,6 +89,7 @@ public class RoomController {
     }
 
     @DeleteMapping("/delete/{roomId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteRoom(@PathVariable Long roomId) {
         roomService.deleteRoomByID(roomId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
