@@ -15,4 +15,6 @@ public interface BookingService  {
     BookedRoomModel findByBookingConfirmationCode(String confirmationCode) throws ResourceNotFoundException;
 
     List<BookedRoomModel> getAllBookings();
+
+    List<BookedRoomModel> getBookingsByUserEmail(String email);
 }

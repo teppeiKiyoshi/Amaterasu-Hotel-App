@@ -4,6 +4,7 @@ import com.personalproj.amaterasuhotel.exception.PhotoRetrievalException;
 import com.personalproj.amaterasuhotel.exception.ResourceNotFoundException;
 import com.personalproj.amaterasuhotel.model.BookedRoomModel;
 import com.personalproj.amaterasuhotel.model.RoomModel;
+import com.personalproj.amaterasuhotel.response.BookingResponse;
 import com.personalproj.amaterasuhotel.response.RoomResponse;
 import com.personalproj.amaterasuhotel.service.BookingService;
 import com.personalproj.amaterasuhotel.service.RoomService;
@@ -122,14 +123,14 @@ public class RoomController {
 
     private RoomResponse getRoomResponse(RoomModel room) {
         List<BookedRoomModel> bookings = getAllBookingsByRoomId(room.getId());
-//        List<BookingResponse> bookingInfo = bookings
-//                .stream()
-//                .map(booking -> new BookingResponse(
-//                        booking.getBookingId(),
-//                        booking.getCheckInDate(),
-//                        booking.getCheckOutDate(),
-//                        booking.getBookingConfirmationCode())
-//                ).toList();
+        List<BookingResponse> bookingInfo = bookings
+                .stream()
+                .map(booking -> new BookingResponse(
+                        booking.getBookingId(),
+                        booking.getCheckInDate(),
+                        booking.getCheckOutDate(),
+                        booking.getBookingConfirmationCode())
+                ).toList();
 
         byte[] photoBytes = null;
         Blob photoBlob = room.getPhoto();

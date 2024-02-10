@@ -76,8 +76,13 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public BookedRoomModel findByBookingConfirmationCode(String confirmationCode) throws ResourceNotFoundException {
+    public BookedRoomModel findByBookingConfirmationCode(String confirmationCode) {
         return bookingRepository.findByBookingConfirmationCode(confirmationCode)
                 .orElseThrow(()-> new ResourceNotFoundException("No booking found with booking confirmation code: " + confirmationCode));
+    }
+
+    @Override
+    public List<BookedRoomModel> getBookingsByUserEmail(String email) {
+        return bookingRepository.findByGuestEmail(email);
     }
 }
